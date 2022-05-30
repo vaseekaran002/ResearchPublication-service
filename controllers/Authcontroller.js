@@ -21,18 +21,19 @@ const register = async (req, role, res) => {
 const login = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
+
     if (user) {
       bcryptjs.compare(req.body.password, user.password, (err, data) => {
         if (err) throw err;
         if (data) {
-          return res.status(200).json({ msg: "Login success" });
+          return res.status(200).send(user);
         } else {
           return res.status(401).json({ msg: "Invalid credencial" });
         }
       });
     } else {
       res.json({
-        error: "login failed",
+        error: "login failed1",
       });
     }
   } catch (e) {
